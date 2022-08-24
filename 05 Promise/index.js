@@ -93,3 +93,34 @@ Promise.race([sleep(2000), sleep(3000)]).then(() => {
 });
 
 // Проміси - обгортка для асинхронного коду, для зручності
+
+// .then(()=.{}, ()=>{}) - ferst argument it's resolve, second - reject
+// .catch(f) === .then(null, f)
+// .finally(func) == .then(func, func) - any function: resolve or reject, state: settled
+p.finally(() => 'зупинити індикатор завантаження').then(result => 'вивести результат', err => 'вивести помилку');
+// Обробник finally пропускає результат чи помилку до наступних обробників.
+
+// let promise = new Promise(function(resolve, reject) {
+//   resolve(1);
+
+//   setTimeout(() => resolve(2), 1000);
+// });
+// promise.then(alert); // 1
+
+// function delay(ms) {
+// 	return new Promise((resolve, reject) => {
+// 		setTimeout(resolve, ms)
+// 	})
+// }
+
+// delay(3000).then(() => alert('виконалось через 3 секунди'));
+
+// fetch('/article/promise-chaining/user.json')
+//   .then(response => response.json())
+//   .then(user => alert(user.name)).catch(err => console.error('Такої адреси немає:', err));
+
+new Promise(function(resolve, reject) {
+  setTimeout(() => {
+    throw new Error("Whoops!");
+  }, 8000);
+}).catch(alert);
