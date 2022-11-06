@@ -79,4 +79,18 @@ function lastVisit(user) {
 console.log(lastVisit(users[1]));
 
 // SET -------------------------------------------------------------------------------------------------------------------------------
-// 20^42
+
+const set = new Set([1, 2, 3, 3, 3, 4, 5, 5, 6, 6,]);
+console.log(set);
+set.add(10).add(20).add(20);
+console.log(set);
+console.log(set.has(42)); // false
+console.log(set.size); // 8
+console.log(set.delete(4)); 
+
+// set.keys() == set.values() - ключі і значення в сеті рівні, методи зроблені для з'єднання з map структурами
+
+console.log(set.entries()); // set to map
+
+// WeakMap – ключі тільки об'єкти, підтримує видалення сміття
+// WeakSet – також елементи об'єкти, і також якщо об'єкт десь видаляється, то він видаляється і з WeakSet об'єкта.
