@@ -181,4 +181,4 @@ const ihor2 = {
 		return sayHello();
 	},
 };
-console.log(ihor2.saySomthing()); // 'Alex say hello'
+console.log(ihor2.saySomthing()); // 'Ihor/Alex say hello'
