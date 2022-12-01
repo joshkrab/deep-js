@@ -29,3 +29,23 @@ console.log(count);
 
 // algorithm complexity O(log2N), N - number of iterations and length of array
 // log 2 16 = 4; 4^2=16; or 16 / 2 - 4 times;
+
+// This algorithm with recursion:
+let countR = 0;
+function binaryRecSearch(array, item, start, end) {
+	countR += 1;
+
+	let middle = Math.floor((start + end)/2);
+	if (array[middle] === item) {
+		return middle;
+	}
+	if ( item < array[middle]) {
+		return binaryRecSearch(array, item, start, middle - 1);
+	}
+	if (item > array[middle]) {
+		return binaryRecSearch(array, item, middle + 1, end);
+	}
+	return null;
+}
+console.log(binaryRecSearch(array, 122, 0, array.length));   
+console.log(countR);
