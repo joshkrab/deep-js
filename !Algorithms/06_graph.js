@@ -29,3 +29,15 @@ function breadthSearch(graph, start, end) {
 	return false;
 }
 console.log(breadthSearch(graph, 'a', 'g'));
+
+// Матриця суміжності / adjacency matrix:
+// Коли є зв'язк між вершинами ставиться 1
+const matrix = [
+	[0, 1, 1, 0, 0, 0, 0],
+	[0, 0, 0, 0, 1, 0, 0],
+	[0, 0, 0, 1, 0, 1, 0],
+	[0, 0, 0, 0, 1, 0, 0],
+	[0, 0, 0, 0, 0, 0, 1],
+	[0, 0, 0, 0, 1, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
+];
