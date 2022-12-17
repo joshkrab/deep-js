@@ -8,6 +8,7 @@ function binarySearch(array, item) {
 	let middle;
 	let found = false;
 	let position = -1;
+
 	while (found === false && start <= end) {
 		middle = Math.floor((start + end) / 2); // rounding down
 		count += 1;
@@ -47,5 +48,5 @@ function binaryRecSearch(array, item, start, end) {
 	}
 	return null;
 }
-console.log(binaryRecSearch(array, 122, 0, array.length));   
+console.log(binaryRecSearch(array, 11, 0, array.length));   
 console.log(countR);

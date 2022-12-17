@@ -10,7 +10,7 @@ function linearSearch(array, item) {
 	}
 	return null;
 }
-console.log(linearSearch(array, 8));
+console.log(linearSearch(array, 12));
 console.log(count);
 
 // algorithm complexity O(N), N - number of iterations
