@@ -1,23 +1,23 @@
-function cashFunction(fn) {
-	const cash = {};
-	return function (n) {
-		if (cash[n]) {
-			console.log('From cash: ',cash[n]);
-			return cash[n];
-		}
-		cash[n] = fn(n);
-		console.log('From func ',cash[n]);
-		return cash[n];
-	}
+function cashFunction (fn) {
+  const cash = {};
+  return function (n) {
+    if (cash[n]) {
+      console.log('From cash: ', cash[n]);
+      return cash[n];
+    }
+    cash[n] = fn(n);
+    console.log('From func ', cash[n]);
+    return cash[n];
+  };
 };
 
-function factorial(n) {
-	let result = 1;
-	while (n !== 1) {
-		result *= n;
-		n--;
-	}
-	return result;
+function factorial (n) {
+  let result = 1;
+  while (n !== 1) {
+    result *= n;
+    n--;
+  }
+  return result;
 }
 // console.log(factorial(5));
 
