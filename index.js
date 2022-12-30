@@ -69,7 +69,7 @@ function greet (language) {
   }
   return 'IP_ADDRESS_NOT_FOUND';
 }
-console.log(greet('english'));
+// console.log(greet('english'));
 
 function sumArray (n) {
   let result = 0;
@@ -84,7 +84,7 @@ function sumArray (n) {
   }
   return result;
 }
-console.log(sumArray([0, 1, 6, 10, 10]));
+// console.log(sumArray([0, 1, 6, 10, 10]));
 
 // Хешування - кожну літеру (крім цифри або сімвола) перенести на 13 сімволів в алфавіті:
 function rot13 (message) {
@@ -98,3 +98,17 @@ function rot13 (message) {
     return i;
   }).join('');
 }
+
+function nbDig (n, d) {
+  let count = 0;
+
+  for (let i = 0; i < n; i++) {
+    let re = new RegExp(String(d), "g");
+
+    if (String(i * i).match(re)) {
+      count += String(i * i).match(re).length;
+    }
+  }
+  return count;
+}
+console.log(nbDig(11011, 2));
