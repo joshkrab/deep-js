@@ -41,6 +41,7 @@ function quickSort (arr) {
   }
   return [...quickSort(less), arr[middle], ...quickSort(bigger)];
 }
+
 console.log(quickSort(array));
 console.log(count);
 // algorithm complexity O(log2N * N)
