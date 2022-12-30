@@ -5,21 +5,31 @@
 // Робимо емуляцію роботи з сервером:
 console.log('Request data...'); // Якоби запит на сервер
 
+btn.addEventListener('click', () => {
+	alert('You clicked me!');
+
+	let pElem = document.createElement('p');
+	pElem.textContent = 'This is a newly-added paragraph.';
+	document.body.appendChild(pElem);
+});
+// Асінхронні колбекі - функції прийняті як аргумент, і будуть виконані коли зовнішня функція спрацює або виконана
+
+
 // Визиваємо асінхронність - якоби сервер робить запит до БД, робить це за 2 секунди
-// setTimeout(() => {
-// 	console.log('Preparing data...');
+setTimeout(() => {
+	console.log('Preparing data...');
 
-// 	const backEndData = {
-// 		server: 'abs',
-// 		port: 2000,
-// 		status: 'working',
-// 	};
+	const backEndData = {
+		server: 'abs',
+		port: 2000,
+		status: 'working',
+	};
 
-// 	setTimeout(() => {
-// 		backEndData.modified = true;
-// 		console.log('Data received:', backEndData);
-// 	}, 2000);
-// }, 2000);
+	setTimeout(() => {
+		backEndData.modified = true;
+		console.log('Data received:', backEndData);
+	}, 2000);
+}, 2000);
 
 // Такий підхід є паганим великою вкладеністю - колбекі всередені колбеків - callback hell
 
@@ -119,8 +129,8 @@ p.finally(() => 'зупинити індикатор завантаження').
 //   .then(response => response.json())
 //   .then(user => alert(user.name)).catch(err => console.error('Такої адреси немає:', err));
 
-new Promise(function(resolve, reject) {
-  setTimeout(() => {
-    throw new Error("Whoops!");
-  }, 8000);
+new Promise(function (resolve, reject) {
+	setTimeout(() => {
+		throw new Error("Whoops!");
+	}, 8000);
 }).catch(alert);

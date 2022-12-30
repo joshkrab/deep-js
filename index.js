@@ -102,7 +102,7 @@ function rot13 (message) {
 function nbDig (n, d) {
   let count = 0;
 
-  for (let i = 0; i < n; i++) {
+  for (let i = 0; i <= n; i++) {
     let re = new RegExp(String(d), "g");
 
     if (String(i * i).match(re)) {
@@ -111,4 +111,4 @@ function nbDig (n, d) {
   }
   return count;
 }
-console.log(nbDig(11011, 2));
+console.log(nbDig(5750, 0));
