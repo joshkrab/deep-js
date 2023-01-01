@@ -1,9 +1,7 @@
-// Коллбэк — це функція, яка повинна бути виконана після того, як інша функція завершила виконання
+// Коллбэк — це функція, яку ми приймаємо в аргументи і викликаємо в середині.
 // ( звітси і назва: callback – функція зворотнього визову )
 // Я так розумію: колбек це функція в аргументі, яка виконається коли виконається зовнішня, наприклат тайм-аут
 
-// Робимо емуляцію роботи з сервером:
-console.log('Request data...'); // Якоби запит на сервер
 
 btn.addEventListener('click', () => {
 	alert('You clicked me!');
@@ -12,9 +10,10 @@ btn.addEventListener('click', () => {
 	pElem.textContent = 'This is a newly-added paragraph.';
 	document.body.appendChild(pElem);
 });
-// Асінхронні колбекі - функції прийняті як аргумент, і будуть виконані коли зовнішня функція спрацює або виконана
+// Асінхронні колбекі - функції прийняті як аргумент, і будуть виконані коли зовнішня функція спрацює в фоні
 
-
+// Робимо емуляцію роботи з сервером:
+console.log('Request data...'); // Якоби запит на сервер
 // Визиваємо асінхронність - якоби сервер робить запит до БД, робить це за 2 секунди
 setTimeout(() => {
 	console.log('Preparing data...');
@@ -107,6 +106,7 @@ Promise.race([sleep(2000), sleep(3000)]).then(() => {
 // .then(()=.{}, ()=>{}) - ferst argument it's resolve, second - reject
 // .catch(f) === .then(null, f)
 // .finally(func) == .then(func, func) - any function: resolve or reject, state: settled
+
 p.finally(() => 'зупинити індикатор завантаження').then(result => 'вивести результат', err => 'вивести помилку');
 // Обробник finally пропускає результат чи помилку до наступних обробників.
 
@@ -134,3 +134,53 @@ new Promise(function (resolve, reject) {
 		throw new Error("Whoops!");
 	}, 8000);
 }).catch(alert);
+
+
+// https://developer.mozilla.org/ru/docs/Learn/JavaScript/Asynchronous/Introducing ------------------------------------------------------------------------------------
+
+// Не всі колбекі асінхронні, наприклад методи масивів виконують колбек одразу. Ці колбекі не очікують ніяких дій, а виконуються одразу.
+
+// Проміси - більш сучасний синтаксис після колбеків, для асинхроного коду.
+
+// Приклад промісу це метод fetch(), який є сучасною версією апі XMLHttpRequest.
+
+fetch('products.json')
+	.then(response => {
+		if (!response.ok) {
+			throw new Error(`HTTP error: ${response.status}`);
+		}
+		return response.json();
+	})
+	.then(json => initialize(json))
+	.catch(err => console.error(`Fetch problem: ${err.message}`));
+
+// Проміс - це об'єкт, що представляє асинхронну операцію, виконану вдало чи невдало.
+// Кожен .then() блок повертає новий promise. Блоки послідовно виконуються в черзі подій.
+
+// https://developer.mozilla.org/ru/docs/Learn/JavaScript/Asynchronous/Promises ------------------------------------------------------------------------------------------
+
+// async/await - може не підтримуватись в деяких браузерах.
+
+// async - перетворює звичайну функцію асинхронну і результат виклику функції обертає в Promise.
+
+async function hello () {
+	return greeting = await Promise.resolve("Hello");
+};
+
+hello().then(alert);
+
+// await блокує потік тільки авсередині асінхронной функції
+
+// Подхід fast-async-await:
+
+async function timeTest () {
+	const timeoutPromise1 = timeoutPromise(3000);
+	const timeoutPromise2 = timeoutPromise(3000);
+	const timeoutPromise3 = timeoutPromise(3000);
+
+	await timeoutPromise1;
+	await timeoutPromise2;
+	await timeoutPromise3;
+}
+// В даному прикладі ми не блокуємо запись зміних, вони запишуться незалежно одна від іншої
+// Нижче ми очікуємо виконання промісів з об'єкта в результат, оскільки вони були запущені одночасно, блокуючи потік, і виконуються одночасно.
