@@ -1,16 +1,11 @@
 const dns = require('dns');
 
-
-async function resolveHost (host) {
-	let adress;
-	dns.lookup(host, (err, addresses, family) => {
-		// console.log('addresses:', addresses);
-		adress = addresses;
-	});
-	return adress;
+function resolveHost (host) {
+	return new Promise((resolve) => dns.lookup(host, (err, addresses, family) => {
+		resolve(addresses);
+	}));
 }
-// resolveHost('google.com');
-// resolveHost('google.com').then(console.log);
+resolveHost('google.com').then(console.log);
 
 function out (n) {
 	for (let i = 1; i <= n; i++) {
