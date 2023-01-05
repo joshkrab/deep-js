@@ -5,7 +5,7 @@ function resolveHost (host) {
 		resolve(addresses);
 	}));
 }
-resolveHost('google.com').then(console.log);
+// resolveHost('google.com').then(console.log);
 
 function out (n) {
 	for (let i = 1; i <= n; i++) {
@@ -14,4 +14,14 @@ function out (n) {
 		}, i * 1000)
 	}
 }
-out(5);
+// out(5);
+
+setTimeout(() => {
+	console.log(1);
+	setTimeout(() => {
+		console.log(2);
+		setTimeout(() => {
+			console.log(3);
+		}, 1000)
+	}, 1000)
+}, 1000)
