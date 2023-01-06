@@ -88,6 +88,9 @@ let promise = new Promise(function (resolve, reject) {
 let fastPromise = new Promise(resolve => resolve("Fast promise resolved!"));
 // fastPromise.then(console.log); // виведе "завершено!"
 
+// Promise.resolve(value) // Теж створює вирішений проміс із результатом value.
+// Promise.reject(error) // створює проміс, що завершується помилкою error.
+
 function delay (ms) {
 	return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -118,3 +121,101 @@ new Promise(resolve => resolve(12))
 // fetch('/article/promise-chaining/user.json')
 // 	.then(response => response.json())
 // 	.then(user => alert(user.name)); // iliakan, отримали ім’я користувача
+
+// Errors ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// new Promise((resolve, reject) => {
+// 	resolve("ok");
+// }).then((result) => {
+// 	console.log('First promise ok');
+// 	blabla(); // викликаємо неіснуючу функцію
+// }).catch(console.log); // ReferenceError: blabla is not defined
+
+// Прокидання помилок: якщо функція .catch успішно виконана, тоді далі помилка не прокидується:
+new Promise((resolve, reject) => {
+
+	throw new Error("Помилка!");
+
+}).catch(function (error) {
+
+	// throw error; // прокидуємо цю або іншу помилку в наступний catch
+	console.log("Помилка оброблена, продовжуємо роботу");
+
+}).then(() => console.log("Управління переходить до наступного обробника then"));
+
+// Якщо помилку зовсім не обробляти, буде глобальна помилка в консолі
+// Для цього можна використовувати івенти для перехоплення необроблених помилок
+
+// Чи виконається кетч? Відповідь - ні, прихований try..catch обробляє тільки сінхронні помилки.
+// new Promise(function (resolve, reject) {
+// 	// throw new Error("Whoops!"); // Якщо помилку тут, тоді теж перехопить і спрацює кетч
+// 	setTimeout(() => {
+// 		throw new Error("Whoops!");
+// 		// reject(); // Якщо реджект тоді виконається
+// 	}, 1000);
+// }).catch(err => console.log('Виконався кетч'));
+
+// Promise API -------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Promise.all([
+	new Promise(resolve => setTimeout(() => resolve(1), 3000)), // 1
+	new Promise(resolve => setTimeout(() => resolve(2), 2000)), // 2
+	new Promise(resolve => setTimeout(() => resolve(3), 1000))  // 3
+]).then(console.log); // коли всі проміси виконаються, результат буде [1,2,3]: кожен проміс надає елемент масиву
+
+// В масиві можуть бути не тільки проміси, якщо елемент масиву не проміс, тоді він повертається в результат як є.
+
+// Promise.allSettled(urls.map(url => fetch(url))); - поверне масив усіх результатів
+// [
+// { status: 'fulfilled', value: ...об’єкт відповіді... },
+// { status: 'fulfilled', value: ...об’єкт відповіді... },
+// { status: 'rejected', reason: ...об’єкт помилки... }
+// ]
+
+// Promise.race - поверне тільки перший результат
+// Promise.any - поверне перший успішний результат, або масив помилок в об'єкті error
+
+// Промісифікація -----------------------------------------------------------------------------------------------------------------------------------
+
+// Promisification - перетворення функції, яка приймає колбек та повертає проміс.
+
+// Async/Await -----------------------------------------------------------------------------------------------------------------------------------------------------
+// async - функція повертає проміс
+
+async function f () {
+	return 1;
+}
+f().then(console.log); // 1
+
+// await - змушує JavaScript чекати, поки проміс виконається
+
+async function f () {
+
+	let promise = new Promise((resolve, reject) => {
+		setTimeout(() => resolve("готово!"), 1000)
+	});
+
+	let result = await promise; // чекатиме, поки проміс не виконається (*)
+
+	console.log(result); // "готово!"
+}
+f();
+
+// Сучасні браузери підтримують await на верхньому рівні, якщо ні, тоді можна використати async
+// (async () => {
+// 	let response = await fetch('/article/promise-chaining/user.json');
+// 	let user = await response.json();
+// })();
+
+// Асинхронні методи класів
+// Щоб оголосити асинхронний метод класу, просто додайте перед ним async:
+
+class Waiter {
+	async wait () {
+		return await Promise.resolve(1);
+	}
+}
+
+new Waiter()
+	.wait()
+	.then(console.log); // 1 (це те ж саме, що й (result => console.log(result)))

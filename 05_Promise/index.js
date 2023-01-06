@@ -167,7 +167,7 @@ async function hello () {
 	return greeting = await Promise.resolve("Hello");
 };
 
-hello().then(alert);
+hello().then(console.log);
 
 // await блокує потік тільки авсередині асінхронной функції
 
